@@ -1,0 +1,20 @@
+{
+  "name": "how-to-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/how-to-3/back-end.git"
+  },
+  "keywords": [],
+  "author": "https://github.com/how-to-3",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/how-to-3/back-end/issues"
+  },
+  "homepage": "https://github.com/how-to-3/back-end#readme"
+}
