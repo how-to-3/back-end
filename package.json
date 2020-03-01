@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/how-to-3/back-end/issues"
   },
-  "homepage": "https://github.com/how-to-3/back-end#readme"
+  "homepage": "https://github.com/how-to-3/back-end#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.20.4",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }
