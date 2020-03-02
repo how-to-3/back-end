@@ -40,7 +40,6 @@ exports.up = async function(knex) {
     steps.integer("step_number")
   });
 
-
   await knex.schema.createTable('guideSteps', guideSteps => {
     
     guideSteps.integer("guide_id")
@@ -61,7 +60,6 @@ exports.up = async function(knex) {
 
 exports.down = async function(knex) {
     await knex.schema.dropTableIfExists('guideSteps');
-    await knex.schema.dropTableIfExists('userGuides');
     await knex.schema.dropTableIfExists('steps');
     await knex.schema.dropTableIfExists('guides');
     await knex.schema.dropTableIfExists('users');
