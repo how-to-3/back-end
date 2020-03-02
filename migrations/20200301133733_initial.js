@@ -40,26 +40,9 @@ exports.up = async function(knex) {
     steps.integer("step_number")
   });
 
-  await knex.schema.createTable('guideSteps', guideSteps => {
-    
-    guideSteps.integer("guide_id")
-        .notNullable()
-        .references("id")
-        .inTable("guides")
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
-    guideSteps.integer("step_id")
-        .notNullable()
-        .references("id")
-        .inTable("steps")
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
-    guideSteps.primary(['guide_id', 'step_id'])
-  });
 };
 
 exports.down = async function(knex) {
-    await knex.schema.dropTableIfExists('guideSteps');
     await knex.schema.dropTableIfExists('steps');
     await knex.schema.dropTableIfExists('guides');
     await knex.schema.dropTableIfExists('users');

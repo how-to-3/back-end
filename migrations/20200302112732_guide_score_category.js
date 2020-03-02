@@ -2,7 +2,6 @@
 exports.up = async function(knex) {
   await knex.schema.table('guides', table => {
     table.string('category', 255)
-        .unique();
     table.integer('score')
   });
 };
