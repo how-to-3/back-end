@@ -40,22 +40,6 @@ exports.up = async function(knex) {
     steps.integer("step_number")
   });
 
-  await knex.schema.createTable('userGuides', userGuides => {
-    userGuides.increments();
-
-    userGuides.integer("guide_id")
-        .notNullable()
-        .references("id")
-        .inTable("guides")
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
-     userGuides.integer("user_id")
-        .notNullable()
-        .references("id")
-        .inTable("users")
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
-  });
 
   await knex.schema.createTable('guideSteps', guideSteps => {
     
