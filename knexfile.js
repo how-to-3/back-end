@@ -4,7 +4,6 @@ module.exports = {
 
   development: {
     client: 'sqlite3',
-
     useNullAsDefault:true,
     connection: {
       filename: './database/db.sqlite3'
@@ -30,15 +29,14 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'sqlite3',
+    useNullAsDefault:true,
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
+      filename: './database/db.sqlite3'
+    }
     pool: {
-      min: 2,
-      max: 10
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done);  }
     },
     migrations: {
       tableName: 'knex_migrations'
