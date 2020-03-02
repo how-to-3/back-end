@@ -27,12 +27,10 @@ const sessionConfig = {
 }
 
 const authenticate = require('../middleware/authenticate')
-const testRouter = require('../routers/test-router')
 const authRouter = require('../routers/auth-router')
+const guideRouter = require('../guides/guideRouter.js');
 
 const server = express();
-
-const guideRouter = require('../guides/guideRouter.js');
 
 // middleware
 server.use(helmet());
@@ -41,7 +39,6 @@ server.use(express.json());
 server.use(session(sessionConfig));
 
 // routes
-server.use('/api/', authenticate, testRouter)
 server.use('/api/auth/', authRouter)
 
 // Routes
