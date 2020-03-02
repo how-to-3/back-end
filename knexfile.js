@@ -33,7 +33,7 @@ module.exports = {
     useNullAsDefault:true,
     connection: {
       filename: './database/db.sqlite3'
-    }
+    },
     pool: {
       afterCreate: (conn, done) => {
         conn.run('PRAGMA foreign_keys = ON', done);  }
@@ -42,5 +42,4 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
-
 };
