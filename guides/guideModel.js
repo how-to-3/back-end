@@ -5,8 +5,13 @@ module.exports = {
     findGuideById,
     findGuideSteps,
     addGuide,
+    editGuide,
 };
-// function editGuide()
+function editGuide(changes, guideID){
+    return db('guides')
+        .where({ 'id': guideID})
+        .update(changes)
+};
 function addGuide(guide){
     return db('guides')
         .insert(guide)

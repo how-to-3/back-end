@@ -40,6 +40,19 @@ router.post('/', (req, res) => {
             res.status(500).json({err:'Server could not post the guide'})
         })
 });
+router.put('/:id', (req, res) => {
+    Guides.editGuide(req.body, req.params.id)
+        .then(changes => {
+            Guides.findGuideById(req.params.id)
+                .then(editedGuide => {
+                    res.status(202).json({ msg:'guide succesfully edited!', editedGuide })
+                })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({err:'Server could not edit the guide'})
+        })
+})
 
 
 module.exports = router;
