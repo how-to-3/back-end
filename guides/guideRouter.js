@@ -52,6 +52,16 @@ router.put('/:id', (req, res) => {
             console.log(err);
             res.status(500).json({err:'Server could not edit the guide'})
         })
+});
+router.delete('/:id', (req, res) => {
+    Guides.removeGuide(req.params.id)
+        .then(response => {
+            res.status(200).json({msg: 'guide sucessfully deleted!'})
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({err:'Server could not delete the guide'})
+        })
 })
 
 

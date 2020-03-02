@@ -6,6 +6,12 @@ module.exports = {
     findGuideSteps,
     addGuide,
     editGuide,
+    removeGuide,
+};
+function removeGuide(guideID){
+    return db('guides')
+        .where({ 'id': guideID })
+        .delete();
 };
 function editGuide(changes, guideID){
     return db('guides')
@@ -42,14 +48,3 @@ function find(){
     return db('guides')
 };
 
-// return db('steps as s')
-// .join('guides as g', 's.guide_id', 'g.id')
-// .join('users as u', 'g.user_id', 'u.id')
-// .select('g.guide_name',
-//     'g.id as guide_id',
-//     'u.username as author',
-//     'u.id as author_id',
-//     'g.category',
-//     'g.score',
-//     ''
-// )
