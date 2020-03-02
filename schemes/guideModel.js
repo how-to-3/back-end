@@ -15,7 +15,7 @@ function removeGuide(guideID){
 };
 function editGuide(changes, guideID){
     return db('guides')
-        .where({ 'id': guideID})
+        .where({ 'id': guideID })
         .update(changes)
 };
 function addGuide(guide){

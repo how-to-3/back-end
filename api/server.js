@@ -2,9 +2,11 @@ require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const session = require('express-session')
-const KnexStore = require('connect-session-knex')(session)
-const knex = require('../database/dbConfig')
+const session = require('express-session');
+const KnexStore = require('connect-session-knex')(session);
+const knex = require('../database/dbConfig');
+
+const { restricted } = require('../middleware/authenticate');
 
 const sessionConfig = {
   name:'session-cookie',
@@ -22,17 +24,13 @@ const sessionConfig = {
     createtable:true,
     sidfieldname:'sid',
     clearInterval: 1000 * 60 * 10,
-    
   })
-}
+};
 
-const authenticate = require('../middleware/authenticate')
-const testRouter = require('../routers/test-router')
-const authRouter = require('../routers/auth-router')
+const authRouter = require('../routers/auth-router');
+const guideRouter = require('../routers/guideRouter.js');
 
 const server = express();
-
-const guideRouter = require('../guides/guideRouter.js');
 
 // middleware
 server.use(helmet());
@@ -40,11 +38,8 @@ server.use(cors());
 server.use(express.json());
 server.use(session(sessionConfig));
 
-// routes
-server.use('/api/', authenticate, testRouter)
-server.use('/api/auth/', authRouter)
-
 // Routes
+server.use('/api/auth/', authRouter)
 server.use('/api/guides', guideRouter);
 server.get('/', (req, res) => {
     res.json({ api: 'is running'})

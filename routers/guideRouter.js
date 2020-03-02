@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 
-const Guides = require('./guideModel.js');
+const Guides = require('../schemes/guideModel.js');
 
 router.get('/', (req, res) => {
     Guides.find()
@@ -62,7 +62,13 @@ router.delete('/:id', (req, res) => {
             console.log(err);
             res.status(500).json({err:'Server could not delete the guide'})
         })
-})
-
+});
 
 module.exports = router;
+
+function validateGuideBody(req, res, next){
+    const body = req.body;
+    if(body){
+        
+    }
+}
