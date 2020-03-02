@@ -32,6 +32,8 @@ const authRouter = require('../routers/auth-router')
 
 const server = express();
 
+const guideRouter = require('../guides/guideRouter.js');
+
 // middleware
 server.use(helmet());
 server.use(cors());
@@ -42,6 +44,8 @@ server.use(session(sessionConfig));
 server.use('/api/', authenticate, testRouter)
 server.use('/api/auth/', authRouter)
 
+// Routes
+server.use('/api/guides', guideRouter);
 server.get('/', (req, res) => {
     res.json({ api: 'is running'})
 });
