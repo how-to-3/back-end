@@ -29,6 +29,7 @@ const sessionConfig = {
 
 const authRouter = require('../routers/auth-router');
 const guideRouter = require('../routers/guideRouter.js');
+const stepRouter = require('../routers/stepsRouter.js');
 
 const server = express();
 
@@ -39,8 +40,9 @@ server.use(express.json());
 server.use(session(sessionConfig));
 
 // Routes
-server.use('/api/auth/', authRouter)
+server.use('/api/auth/', authRouter);
 server.use('/api/guides', guideRouter);
+server.use('/api/steps', stepRouter);
 server.get('/', (req, res) => {
     res.json({ api: 'is running'})
 });
