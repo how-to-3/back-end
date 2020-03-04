@@ -7,6 +7,7 @@ module.exports = {
     addGuide,
     editGuide,
     removeGuide,
+    getGuideByUser
 };
 function removeGuide(guideID){
     return db('guides')
@@ -49,4 +50,10 @@ function findGuideById(guideID){
 function find(){
     return db('guides')
 };
+
+function getGuideByUser(id){
+    return db("guides")
+            .select("guides.guide_name","guides.category", "guides.score", "guides.id")
+            .where("guides.user_id", id)
+}
 

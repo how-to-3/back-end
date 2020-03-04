@@ -30,6 +30,18 @@ router.get('/:id', (req, res) => {
             res.status(500).json({err:'Server could not find the guide'})
         })
 });
+
+router.get('/users/:id/', (req, res) => {
+    Guides.getGuideByUser(req.params.id)
+        .then(guides => {
+            res.status(200).json(guides)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({err:'Server could not find guides for that user'})
+        })
+});
+
 router.post('/', restricted, validateGuideBody, (req, res) => {
     req.body.user_id = req.decodedToken.user_id
     const body = req.body;
