@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Guides = require('../schemes/guideModel.js');
-const Steps = require('../schemes/stepsModel.js');
 const { validateGuideBody, validateGuideID } = require('../middleware/dataValidation/guideValidation.js');
-const { validateStepBody } = require('../middleware/dataValidation/stepValidation.js');
 const  restricted  = require('../middleware/authenticate.js');
 
 router.get('/', (req, res) => {
@@ -93,17 +91,6 @@ router.delete('/:id', restricted, validateGuideID, (req, res) => {
             res.status(500).json({err:'Server could not delete the guide'})
         })
 });
-router.post('/:id/step', restricted, validateGuideID, validateStepBody, (req, res) => {
-    Steps.addStep(req.body, req.params.id)
-        .then(resp => {
-            console.log(resp);
-            res.status(201).json({msg:`new step has been added!`})
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({err:'Server could not add the step'})
-        })
-})
 
 module.exports = router;
 
