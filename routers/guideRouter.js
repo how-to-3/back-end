@@ -48,28 +48,10 @@ router.post('/', restricted, validateGuideBody, (req, res) => {
     Guides.addGuide(body)
         .then(id => {
             const guideID = id[0];
-            // if(steps.length > 0){
-            //     console.log(steps.length)
-                // async function asyncMap(steps){
-                //     const promises = steps.map(step => {
-                //         Steps.addStep(step, guideID)
-                //     });
-                //     await Promise.all(promises);
-                    // Guides.findGuideById(guideID)
-                    //     .then(newGuide => {
-                    //         res.status(201).json({ msg:'guide succesfully posted!', newGuide })
-                    //     })
-                    //     .catch(err => {
-                    //         console.log(err);
-                    //         res.status(500).json({err:'could not post guide with steps'})
-                    //     })
-                // };
-            // } else {
-                Guides.findGuideById(guideID)
-                    .then(newGuide => {
-                        res.status(201).json({ msg:'guide succesfully posted!', newGuide })
-                    })
-            // };
+            Guides.findGuideById(guideID)
+                .then(newGuide => {
+                    res.status(201).json({ msg:'guide succesfully posted!', newGuide })
+                })
         })
         .catch(err => {
             console.log(err);
