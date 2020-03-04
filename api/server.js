@@ -6,7 +6,7 @@ const session = require('express-session');
 const KnexStore = require('connect-session-knex')(session);
 const knex = require('../database/dbConfig');
 
-const { restricted } = require('../middleware/authenticate');
+const restricted = require('../middleware/authenticate');
 
 const sessionConfig = {
   name:'session-cookie',
@@ -42,7 +42,7 @@ server.use(session(sessionConfig));
 // Routes
 server.use('/api/auth/', authRouter);
 server.use('/api/guides', guideRouter);
-server.use('/api/steps', stepRouter);
+server.use('/api/steps', restricted, stepRouter);
 server.get('/', (req, res) => {
     res.json({ api: 'is running'})
 });
