@@ -4,9 +4,8 @@ const router = express.Router();
 const Steps = require('../schemes/stepsModel.js');
 const { validateStepBody, validateStepID } = require('../middleware/dataValidation/stepValidation.js');
 const { validateGuideID } = require('../middleware/dataValidation/guideValidation.js');
-const  restricted  = require('../middleware/authenticate.js');
 
-router.post('/:id/steps/', restricted, validateGuideID, validateStepBody, (req, res) => {
+router.post('/:id/steps/', validateGuideID, validateStepBody, (req, res) => {
     Steps.addStep(req.body, req.params.id)
         .then(resp => {
             console.log(resp);
