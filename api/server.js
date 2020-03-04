@@ -44,7 +44,7 @@ server.use('/api/auth/', authRouter);
 server.use('/api/guides', guideRouter);
 server.use('/api/steps', restricted, stepRouter);
 server.get('/', (req, res) => {
-    res.json({ api: 'is running'})
+    res.json({ apiDocs: 'https://documenter.getpostman.com/view/10583912/SzKbLvCk?version=latest'})
 });
 
 module.exports = server;

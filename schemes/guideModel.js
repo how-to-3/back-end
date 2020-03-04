@@ -39,7 +39,9 @@ function findGuideById(guideID){
             'u.username as author',
             'u.id as author_id',
             'g.category',
-            'g.score'
+            'g.score',
+            'g.img_url',
+            'g.description'
         )
         .where({ 'g.id': guideID })
         .first();

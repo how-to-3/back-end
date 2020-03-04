@@ -5,11 +5,17 @@ module.exports = {
     validateGuideID
 };
 function validateGuideBody(req, res, next){
+    if(!req.body.img_url){
+        req.body.img_url = 'https://picsum.photos/200'
+    };
     const body = req.body;
-    if(body.guide_name && body.category){
+    if(body.guide_name 
+        && body.category
+        && body.score
+        && body.description){
         next();
     } else {
-        res.status(400).json({err:'please provide a valid body'})
+        res.status(400).json({err:'please provide a valid guide body'})
     }
 };
 
