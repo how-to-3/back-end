@@ -2,11 +2,19 @@ require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const KnexStore = require('connect-session-knex')(session);
 const knex = require('../database/dbConfig');
+const cloudinary = require('cloudinary').v2
 
 const restricted = require('../middleware/authenticate');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME ,
+  api_key: process.env.CLOUDINARY_API_KEY ,
+  api_secret: process.env.CLOUDINARY_API_SECRET 
+})
 
 const sessionConfig = {
   name:'session-cookie',
@@ -38,11 +46,14 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 server.use(session(sessionConfig));
+server.use(fileUpload({
+  useTempFiles: true
+}));
 
 // Routes
 server.use('/api/auth/', authRouter);
 server.use('/api/guides', guideRouter);
-server.use('/api/steps', restricted, stepRouter);
+server.use('/api/guides', restricted, stepRouter);
 server.get('/', (req, res) => {
     res.json({ apiDocs: 'https://documenter.getpostman.com/view/10583912/SzKbLvCk?version=latest'})
 });

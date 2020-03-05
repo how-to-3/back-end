@@ -18,14 +18,19 @@ module.exports = {
   testing: {
     client: 'sqlite3',
     connection: {
-      filename: './db/testing.db3'
+      filename: './database/testing.sqlite3'
     },
     useNullAsDefault: true,
     migrations: {
-      directory: './db/migrations'
+      directory: './migrations',
+      tableName: 'knex_migrations'
     },
     seeds: { 
-      directory: './db/seeds'
+      directory: './seeds'
+    },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done);  }
     },
   },
 
@@ -33,14 +38,18 @@ module.exports = {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: './database/db.sqlite3'
+      filename: './database/production.sqlite3'
     },
     pool: {
       afterCreate: (conn, done) => {
         conn.run('PRAGMA foreign_keys = ON', done);  }
     },
     migrations: {
+      directory: './migrations',
       tableName: 'knex_migrations'
-    }
+    },
+    seeds: { 
+      directory: './seeds'
+    },
   }
 };
