@@ -1,10 +1,43 @@
 const express = require('express');
 const router = express.Router();
+const cloudinary = require('cloudinary').v2
 
 const Guides = require('../schemes/guideModel.js');
 const { validateGuideBody, validateGuideID } = require('../middleware/dataValidation/guideValidation.js');
 const  restricted  = require('../middleware/authenticate.js');
 
+router.put('/:id/img_upload', restricted, (req, res) => {
+    const { id } = req.params;
+    const file = req.files.guide_image
+    let body = {};
+    Guides.findGuideById(id)
+        .then(guide => {
+            cloudinary.uploader.upload(file.tempFilePath, function(err, result){
+                if(err){
+                    res.status(500).json({
+                        error: err, 
+                        err:'server could not upload the image :('
+                    })
+                } else if(result){
+                    body = {
+                        guide_name: guide.guide_name,
+                        img_url: result.url,
+                        category: guide.category,
+                        score: guide.score,
+                        description: guide.description
+                    };
+                    Guides.editGuide(body, id)
+                        .then(eg => {
+                            res.status(200).json({msg:'image uploaded!'})
+                        })
+                }
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({err:'invalid guide ID'})
+        })
+})
 router.get('/', (req, res) => {
     Guides.find()
         .then(guides => {
@@ -43,18 +76,6 @@ router.get('/users/:id/', (req, res) => {
 router.post('/', restricted, validateGuideBody, (req, res) => {
     req.body.user_id = req.decodedToken.user_id
     const body = req.body;
-    // if(!body.user_id){
-    //     res.status(400).json({err:'please send a valid user_id'});
-    // }
-    // const guideBody = {
-    //     guide_name: body.guide_name, 
-    //     user_id: body.user_id,
-    //     category: body.category
-    // };
-    // let steps = [];
-    // if(body.steps){
-    //      steps = body.steps;
-    // };
     Guides.addGuide(body)
         .then(id => {
             const guideID = id[0];
